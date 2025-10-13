@@ -4,8 +4,8 @@
 ## Notes: Automatically summons a random selected battle pet.
 ## SavedVariables: PetSummoner
 ## Author: Jods
-## X-Curse-Project-ID: 
-## X-Wago-ID: 
+## X-Curse-Project-ID: 1364755
+## X-Wago-ID: mNwQVeKo
 ## OptionalDeps: Ace3
 ## AddonCompartmentFunc: PetSummoner_AddonCompartmentFunction
 ## IconTexture: Interface\AddOns\PetSummoner\Files\PetSummoner.tga

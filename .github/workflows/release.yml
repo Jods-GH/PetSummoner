@@ -21,7 +21,7 @@ jobs:
 
     # specify the environment variables used by the packager, matching the secrets from the project on GitHub
     env:
-      MESSAGE: "CustomNames: New Release Published"
+      MESSAGE: "Pet Summoner: New Release Published"
       CF_API_KEY: ${{ secrets.CF_API_KEY }}
       WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
       WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           embed-title: ${{ env.MESSAGE }}
-          embed-url: https://github.com/Jodsderechte/CustomNames/releases/latest
+          embed-url: https://github.com/Jods-GH/PetSummoner/releases/latest
           embed-description:  ${{ steps.readChanglog.outputs.text }}
     
       
