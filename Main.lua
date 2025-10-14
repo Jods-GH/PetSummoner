@@ -94,7 +94,6 @@ private.assurePetIsActive = function()
         ensureNoPet()
         return
     end
-    print(selectedPets[randPet])
     local pet_guid = C_PetJournal.GetPetInfoByPetID(selectedPets[randPet]) and selectedPets[randPet]
     if pet_guid then
         local current_pet_guid = C_PetJournal.GetSummonedPetGUID()
