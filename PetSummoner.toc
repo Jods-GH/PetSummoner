@@ -8,7 +8,7 @@
 ## X-Wago-ID: mNwQVeKo
 ## OptionalDeps: Ace3
 ## AddonCompartmentFunc: PetSummoner_AddonCompartmentFunction
-## IconTexture: Interface\AddOns\PetSummoner\Files\PetSummoner.tga
+## IconTexture: Interface\AddOns\PetSummoner\Files\PetSummonerLogo.tga
 ## Category: Other
 ## Category-deDE: Anderes
 ## Category-esES: Otros
@@ -20,7 +20,6 @@
 ## Category-ruRU: Другое
 ## Category-zhCN: 其它
 ## Category-zhTW: 其他
-
 #Libs
 embeds.xml
 
