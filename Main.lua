@@ -16,7 +16,7 @@ function Addon:OnInitialize()
         type = "group",
         args = {
             profile = AceDBOptions:GetOptionsTable(private.db),
-            rest = private.options
+            other = private.options
         }
     }
     AceConfig:RegisterOptionsTable(appName, OptionTable) --
