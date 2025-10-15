@@ -64,8 +64,6 @@ private.setupOptions = function()
     local nameToUse = customName or name or "Unknown"
     local speciesName, speciesIcon, petType, companionID, tooltipSource, tooltipDescription, isWild, canBattle, isTradeable, isUnique, obtainable, creatureDisplayID =
         C_PetJournal.GetPetInfoBySpeciesID(speciesID)
-    print(PET_TYPE_SUFFIX[petType])
-    print(type(PET_TYPE_SUFFIX[petType]))
     if not private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]] then
       private.PET_LIST[petType] = {}
       private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]] = {
