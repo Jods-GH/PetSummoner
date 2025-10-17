@@ -10,6 +10,7 @@ function Addon:OnInitialize()
     
     Addon:RegisterEvent("PLAYER_ENTERING_WORLD")
     Addon:RegisterEvent("PET_JOURNAL_LIST_UPDATE")
+    Addon:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
     private.db = LibStub("AceDB-3.0"):New("PetSummoner", private.OptionDefaults, true) -- Generates Saved Variables with default Values (if they don't already exist)
     private.setupOptions()
     local OptionTable = {
@@ -115,4 +116,10 @@ end
 
 function Addon:PET_JOURNAL_LIST_UPDATE()
     private.assurePetIsActive()
+end
+
+function Addon:PLAYER_MOUNT_DISPLAY_CHANGED()
+    if private.db.profile.alwaysForceResummon then
+        private.assurePetIsActive()
+    end
 end

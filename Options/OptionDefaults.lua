@@ -6,5 +6,6 @@ private.OptionDefaults = {
 		petOptions = {},
 		searchPets = "",
 		disableInitialMessage = false,
+		alwaysForceResummon = false,
 	}
 }

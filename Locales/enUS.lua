@@ -16,5 +16,8 @@ if L then
     L["findOptions"] = "Find the options for specific pets within their type group. All other options are in the Pet Summoner Category."
     L["disableInitialMessage"] = "Disable Initial Message"
     L["disableInitialMessageDescription"] = "If enabled, the message about accessing the options will not be shown when the addon is loaded."
+    L["alwaysForceResummon"] = "Always Force Resummon"
+    L["alwaysForceResummonDescription"] = "If enabled, the pet will be resummoned when you dismount. This can be useful if you use mounts that unsummon your pet."
+    L["alwaysForceResummonWarning"] = "Enabling this option will always resummon your pet when you dismount. Pet Summoning incurse a global cooldown, so this may impact your gameplay."
     private.localisation = L
 end

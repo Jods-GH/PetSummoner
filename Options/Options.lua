@@ -33,6 +33,23 @@ private.options = {
             .disableInitialMessage --Sets value of toggles depending on SavedVariables
       end
     },
+    alwaysForceResummon = {
+      name = private.getLocalisation("alwaysForceResummon"),
+      desc = private.getLocalisation("alwaysForceResummonDescription"),
+      order = 0,
+      width = "full",
+      type = "toggle",
+      confirm = true,
+      confirmText = private.getLocalisation("alwaysForceResummonWarning"),
+
+      set = function(info, val)
+        private.db.profile.alwaysForceResummon = val
+      end, --Sets value of SavedVariables depending on toggles
+      get = function(info)
+        return private.db.profile
+            .alwaysForceResummon --Sets value of toggles depending on SavedVariables
+      end
+    },
     explainOptions = {
       name = private.getLocalisation("explainOptions"),
       type = "description",
