@@ -63,8 +63,8 @@ private.options = {
       width = "full",
       type = "input",
       set = function(info, val)
-        private.db.profile.searchPets = val
-      end,     --Sets value of SavedVariables depending on toggles
+        private.db.profile.searchPets = string.lower(val)
+      end, --Sets value of SavedVariables depending on toggles
       get = function(info)
         return private.db.profile
             .searchPets --Sets value of toggles depending on SavedVariables
@@ -87,6 +87,49 @@ private.options = {
 }
 private.PET_LIST = {}
 
+local checkPet = function(pet)
+  if string.find(string.lower(pet.name), private.db.profile.searchPets)
+      or string.find(pet.speciesName, private.db.profile.searchPets)
+      or string.find(pet.customName, private.db.profile.searchPets) then
+    return true
+  end
+  return false
+end
+
+local createPetToggle = function(petType, speciesName, petID, customName, name, icon, creatureID, nameToUse)
+  local currentPetList = private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName] or {}
+  currentPetList[petID] = {
+    customName = string.lower(customName or ""),
+    name = string.lower(name or ""),
+    speciesName = string.lower(speciesName or "")
+  }
+  private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName] = currentPetList
+
+
+  private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]].args[speciesName] = {
+    name = nameToUse,
+    desc = string.format(private.getLocalisation("selectPetDescription"), nameToUse),
+    order = creatureID,
+    width = "full",
+    type = "toggle",
+    image = icon,
+    hidden = function() return not checkPet(private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName][petID]) end,
+    disabled = function() return private.db.profile.useFavorites end,
+    set = function(info, val)
+      if val then
+        private.db.profile.petOptions[speciesName] = petID
+      else
+        private.db.profile.petOptions[speciesName] = false
+      end
+      private.assurePetIsActive()
+    end, --Sets value of SavedVariables depending on toggles
+    get = function(info)
+      return private.db.profile.petOptions
+          [speciesName] --Sets value of toggles depending on SavedVariables
+    end,
+  }
+end
+
 private.setupOptions = function()
   local ownedPetIDs = C_PetJournal.GetOwnedPetIDs()
   for _, petID in pairs(ownedPetIDs) do
@@ -96,48 +139,38 @@ private.setupOptions = function()
     local speciesName, speciesIcon, petType, companionID, tooltipSource, tooltipDescription, isWild, canBattle, isTradeable, isUnique, obtainable, creatureDisplayID =
         C_PetJournal.GetPetInfoBySpeciesID(speciesID)
     if not private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]] then
-      private.PET_LIST[petType] = {}
+      private.PET_LIST[PET_TYPE_SUFFIX[petType]] = {}
       private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]] = {
         name = _G["BATTLE_PET_NAME_" .. petType] or PET_TYPE_SUFFIX[petType], -- this is stupid but blizzard
         type = "group",
         args = {},
         order = petType,
         hidden = function()
+          if string.trim(private.db.profile.searchPets) == "" then
+            return false
+          end
           local isHidden = true
-          for petID, pet in pairs(private.PET_LIST[petType]) do
-            if string.find(pet.name, private.db.profile.searchPets) then
-              isHidden = false
-              break
+          for species in pairs(private.PET_LIST[PET_TYPE_SUFFIX[petType]]) do
+            for petID, pet in pairs(private.PET_LIST[PET_TYPE_SUFFIX[petType]][species]) do
+              if checkPet(pet) then
+                isHidden = false
+                break
+              end
             end
           end
           return isHidden
-        end
+        end,
+        disabled = function() return private.db.profile.useFavorites end,
       }
     end
-    private.PET_LIST[petType][petID] = {
-      name = nameToUse,
-    }
-    private.options.args.petOptions.args[PET_TYPE_SUFFIX[petType]].args[speciesName] = {
-      name = nameToUse,
-      desc = string.format(private.getLocalisation("selectPetDescription"), nameToUse),
-      order = creatureID,
-      width = "full",
-      type = "toggle",
-      image = icon,
-      hidden = function() return string.find(nameToUse, private.db.profile.searchPets) == nil end,
-      disabled = function() return private.db.profile.useFavorites end,
-      set = function(info, val)
-        if val then
-          private.db.profile.petOptions[speciesName] = petID
-        else
-          private.db.profile.petOptions[speciesName] = false
-        end
-        private.assurePetIsActive()
-      end, --Sets value of SavedVariables depending on toggles
-      get = function(info)
-        return private.db.profile.petOptions
-            [speciesName] --Sets value of toggles depending on SavedVariables
-      end,
-    }
+    if private.PET_LIST[PET_TYPE_SUFFIX[petType]] and private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName] then
+     
+      if customName and customName ~= "" then
+        createPetToggle(petType, speciesName, petID, customName, name, icon, creatureID, nameToUse)
+      end
+    else
+      private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName] = {}
+      createPetToggle(petType, speciesName, petID, customName, name, icon, creatureID, nameToUse)
+    end
   end
 end
