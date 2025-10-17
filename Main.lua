@@ -89,6 +89,9 @@ local ensureNoPet = function()
 end
 ---ensures a pet is currently summoned, if not summons a random one
 private.assurePetIsActive = function()
+    if InCombatLockdown() then
+        return
+    end
     local selectedPets = findPets()
     if #selectedPets == 0 then
         ensureNoPet()
