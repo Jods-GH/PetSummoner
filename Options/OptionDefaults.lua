@@ -5,5 +5,6 @@ private.OptionDefaults = {
 		useFavorites = true,
 		petOptions = {},
 		searchPets = "",
+		disableInitialMessage = false,
 	}
 }

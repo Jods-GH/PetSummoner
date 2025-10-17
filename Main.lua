@@ -7,7 +7,7 @@ local Addon = LibStub("AceAddon-3.0"):NewAddon("PetSummoner", "AceConsole-3.0", 
 
 function Addon:OnInitialize()
     -- Called when the addon is loaded
-    Addon:Print(private.getLocalisation("AccessOptionsMessage"))
+    
     Addon:RegisterEvent("PLAYER_ENTERING_WORLD")
     Addon:RegisterEvent("PET_JOURNAL_LIST_UPDATE")
     private.db = LibStub("AceDB-3.0"):New("PetSummoner", private.OptionDefaults, true) -- Generates Saved Variables with default Values (if they don't already exist)
@@ -19,10 +19,14 @@ function Addon:OnInitialize()
             other = private.options
         }
     }
+
     AceConfig:RegisterOptionsTable(appName, OptionTable) --
     AceConfigDialog:AddToBlizOptions(appName, appName)
     self:RegisterChatCommand("ps", "SlashCommand")
     self:RegisterChatCommand("PS", "SlashCommand")
+    if not private.db.profile.disableInitialMessage then
+        Addon:Print(private.getLocalisation("AccessOptionsMessage"))
+    end
 end
 
 function Addon:OnEnable()

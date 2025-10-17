@@ -19,6 +19,20 @@ private.options = {
             .useFavorites --Sets value of toggles depending on SavedVariables
       end
     },
+    disableInitialMessage = {
+      name = private.getLocalisation("disableInitialMessage"),
+      desc = private.getLocalisation("disableInitialMessageDescription"),
+      order = 0,
+      width = "full",
+      type = "toggle",
+      set = function(info, val)
+        private.db.profile.disableInitialMessage = val
+      end, --Sets value of SavedVariables depending on toggles
+      get = function(info)
+        return private.db.profile
+            .disableInitialMessage --Sets value of toggles depending on SavedVariables
+      end
+    },
     explainOptions = {
       name = private.getLocalisation("explainOptions"),
       type = "description",

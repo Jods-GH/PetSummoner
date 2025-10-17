@@ -14,5 +14,7 @@ if L then
     L["noPetsSelected"] = "No pets selected in options."
     L["explainOptions"] = "Select which pets should be automatically summoned. If multiple are selected a random pet out of the selected ones will be chosen."
     L["findOptions"] = "Find the options for specific pets within their type group. All other options are in the Pet Summoner Category."
+    L["disableInitialMessage"] = "Disable Initial Message"
+    L["disableInitialMessageDescription"] = "If enabled, the message about accessing the options will not be shown when the addon is loaded."
     private.localisation = L
 end
