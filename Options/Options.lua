@@ -86,7 +86,9 @@ private.options = {
   }
 }
 private.PET_LIST = {}
-
+---checks if a pet matches the search terms
+---@param pet any
+---@return boolean
 local checkPet = function(pet)
   if string.find(string.lower(pet.name), private.db.profile.searchPets)
       or string.find(pet.speciesName, private.db.profile.searchPets)
@@ -95,7 +97,15 @@ local checkPet = function(pet)
   end
   return false
 end
-
+---create a pet toggle 
+---@param petType number
+---@param speciesName string
+---@param petID string
+---@param customName string
+---@param name string
+---@param icon number
+---@param creatureID string
+---@param nameToUse string
 local createPetToggle = function(petType, speciesName, petID, customName, name, icon, creatureID, nameToUse)
   local currentPetList = private.PET_LIST[PET_TYPE_SUFFIX[petType]][speciesName] or {}
   currentPetList[petID] = {
@@ -129,7 +139,7 @@ local createPetToggle = function(petType, speciesName, petID, customName, name, 
     end,
   }
 end
-
+---create all the options for pet selection
 private.setupOptions = function()
   local ownedPetIDs = C_PetJournal.GetOwnedPetIDs()
   for _, petID in pairs(ownedPetIDs) do
