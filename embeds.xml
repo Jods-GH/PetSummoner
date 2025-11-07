@@ -8,4 +8,5 @@
   <Include file="Libs\AceLocale-3.0\AceLocale-3.0.xml"/>
   <Include file="Libs\AceEvent-3.0\AceEvent-3.0.xml"/>
   <Script file="Libs\AceEvent-3.0\AceEvent-3.0.lua"/>
+  <Script file="Libs\AceEvent-3.0\AceConfigDialog-3.0"/>
 </Ui>
