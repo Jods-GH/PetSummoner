@@ -1,4 +1,4 @@
-## Interface: 110207, 120000
+## Interface: 110207, 120000, 120001
 ## Title: Pet Summoner
 ## Version: @project-version@
 ## Notes: Automatically summons a random selected battle pet.
