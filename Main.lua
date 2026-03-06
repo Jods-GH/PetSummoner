@@ -115,6 +115,7 @@ end
 
 function Addon:PLAYER_ENTERING_WORLD(event, eventInfo, initialState)
     private.assurePetIsActive()
+    private.setupOptions()
 end
 
 function Addon:PET_JOURNAL_LIST_UPDATE()
