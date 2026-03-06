@@ -7,7 +7,7 @@ if L then
     L["selectPetDescription"] = "Selects the pet %s to be automatically summoned."
     L["addonOptions"] = "Pet Summoner"
     L["petOptions"] = "Pet Options"
-    L["searchPets"] = "Search Pets"
+    L["searchPets"] = "Search"
     L["searchPetsDescription"] = "Type part of a pet's name to filter the list."
     L["useFavorites"] = "Use Favorite Pets"
     L["useFavoritesDescription"] = "If enabled, only favorite pets will be considered for summoning. Disables selection of individual pets below."
@@ -19,5 +19,10 @@ if L then
     L["alwaysForceResummon"] = "Always Force Resummon"
     L["alwaysForceResummonDescription"] = "If enabled, the pet will be resummoned when you dismount. This can be useful if you use mounts that unsummon your pet."
     L["alwaysForceResummonWarning"] = "Enabling this option will always resummon your pet when you dismount. Pet Summoning incurse a global cooldown, so this may impact your gameplay."
+    L["openPetSelector"] = "Select Pets..."
+    L["openPetSelectorDescription"] = "Open a window to select which pets should be summoned."
+    L["openSettings"] = "Open Pet Summoner Settings"
+    L["petSelectorTitle"] = "Pet Summoner - Select Pets"
+    L["selectedCount"] = "%d pets selected"
     private.localisation = L
 end

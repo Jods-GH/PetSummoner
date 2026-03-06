@@ -20,9 +20,27 @@ function Addon:OnInitialize()
             other = private.options
         }
     }
+    AceConfig:RegisterOptionsTable(appName, OptionTable)
 
-    AceConfig:RegisterOptionsTable(appName, OptionTable) --
-    AceConfigDialog:AddToBlizOptions(appName, appName)
+    local blizOptions = {
+        name = appName,
+        type = "group",
+        args = {
+            openSettings = {
+                name = private.getLocalisation("openSettings"),
+                type = "execute",
+                width = "full",
+                func = function()
+                    HideUIPanel(SettingsPanel)
+                    C_Timer.After(0, function()
+                        AceConfigDialog:Open(appName)
+                    end)
+                end,
+            },
+        },
+    }
+    AceConfig:RegisterOptionsTable(appName .. "_BlizOptions", blizOptions)
+    AceConfigDialog:AddToBlizOptions(appName .. "_BlizOptions", appName)
     self:RegisterChatCommand("ps", "SlashCommand")
     self:RegisterChatCommand("PS", "SlashCommand")
     if not private.db.profile.disableInitialMessage then
@@ -84,7 +102,7 @@ end
 local ensureNoPet = function()
     local current_pet_guid = C_PetJournal.GetSummonedPetGUID()
     if current_pet_guid then
-        C_PetJournal.DismissSummonedPet(current_pet_guid)
+        C_PetJournal.DismissSummonedPet()
     end
 end
 ---ensures a pet is currently summoned, if not summons a random one
@@ -97,17 +115,20 @@ private.assurePetIsActive = function()
         ensureNoPet()
         return
     end
-    local randPet = random(1, #selectedPets)
-    if not selectedPets[randPet] then
-        ensureNoPet()
-        return
-    end
-    local pet_guid = C_PetJournal.GetPetInfoByPetID(selectedPets[randPet]) and selectedPets[randPet]
-    if pet_guid then
-        local current_pet_guid = C_PetJournal.GetSummonedPetGUID()
-        if not current_pet_guid or current_pet_guid ~= pet_guid then
-            C_PetJournal.SummonPetByGUID(pet_guid)
+    -- If a valid selected pet is already summoned, keep it
+    local current_pet_guid = C_PetJournal.GetSummonedPetGUID()
+    if current_pet_guid then
+        for _, petID in ipairs(selectedPets) do
+            if petID == current_pet_guid then
+                return
+            end
         end
+    end
+    -- Summon a random selected pet
+    local randPet = random(1, #selectedPets)
+    local pet_guid = selectedPets[randPet]
+    if pet_guid and C_PetJournal.GetPetInfoByPetID(pet_guid) then
+        C_PetJournal.SummonPetByGUID(pet_guid)
     else
         ensureNoPet()
     end
@@ -119,6 +140,7 @@ function Addon:PLAYER_ENTERING_WORLD(event, eventInfo, initialState)
 end
 
 function Addon:PET_JOURNAL_LIST_UPDATE()
+    private.setupOptions()
     private.assurePetIsActive()
 end
 
